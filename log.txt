@@ -1,0 +1,33 @@
+App 1226777 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 1226777 output: 	return originalRequire.apply(this, arguments);
+App 1226777 output:                         ^
+App 1226777 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/digitsme/mea-travel.com/backend/index.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 1226777 output: Instead change the require of index.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 1226777 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1226777 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 1226777 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 1226777 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 1226777 output:   code: 'ERR_REQUIRE_ESM'
+App 1226777 output: }
+App 1232796 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 1232796 output: 	return originalRequire.apply(this, arguments);
+App 1232796 output:                         ^
+App 1232796 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/digitsme/mea-travel.com/backend/index.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 1232796 output: Instead change the require of index.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 1232796 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1232796 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 1232796 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 1232796 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 1232796 output:   code: 'ERR_REQUIRE_ESM'
+App 1232796 output: }
+App 1233406 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 1233406 output: 	return originalRequire.apply(this, arguments);
+App 1233406 output:                         ^
+App 1233406 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/digitsme/mea-travel.com/backend/index.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 1233406 output: Instead change the require of index.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 1233406 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 1233406 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 1233406 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 1233406 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 1233406 output:   code: 'ERR_REQUIRE_ESM'
+App 1233406 output: }
