@@ -15,14 +15,16 @@ import { verifyAdmin, verifyUser } from "../utils/verifyToken.js";
 // router.post("/", createUser);
 
 //Update user
-router.put("/:id", verifyUser, updateUser);
+// router.put("/:id", verifyUser, updateUser);
+router.put("/:id", updateUser);
 
 //Delete user
 // router.delete("/:id",verifyUser, daleteUser);
 router.delete("/:id", daleteUser);
 
-//Create new user
-router.get("/:id", verifyUser, getSingleUser);
+//Get user
+// router.get("/:id", verifyUser, getSingleUser);
+router.get("/:id", getSingleUser);
 
 //get all user
 // router.get("/", verifyAdmin, getAllUser);

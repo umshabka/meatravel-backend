@@ -69,3 +69,21 @@ export const getAllBooking = async(req,res)=>{
       });
     }
 };
+
+export const daleteBooking = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await Booking.findByIdAndDelete(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully deleted",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete",
+    });
+  }
+};

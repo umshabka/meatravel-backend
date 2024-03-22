@@ -9,6 +9,7 @@ import userRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
 import reviewRouter from "./routes/reviews.js";
 import bookingRouter from "./routes/booking.js";
+import contactInfoRouter from "./routes/contactInfo.js"
 
 dotenv.config();
 const app = express();
@@ -45,6 +46,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/review", reviewRouter);
 app.use("/api/v1/booking", bookingRouter);
+app.use("/api/v1/contactInfo", contactInfoRouter);
 
 app.listen(port, () => {
   connect();

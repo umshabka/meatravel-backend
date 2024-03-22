@@ -1,46 +1,94 @@
 import Tour from "../models/Tour.js";
 
 export const createTour = async (req, res) => {
-  const newTour = new Tour(req.body);
-
+  const { glances, itinerary, accommodations, notes, inclusions, ...tourData } = req.body;
   try {
-    const savedTour = await newTour.save();
+    const newTour = new Tour({ ...tourData, glances: [], itinerary: [], accommodations: [], notes: [], inclusions: [] });
 
+    // Add glances to the new tour if provided
+    if (glances && glances.length > 0) {
+      newTour.glances = glances;
+    }
+
+    // Add itinerary to the new tour if provided
+    if (itinerary && itinerary.length > 0) {
+      newTour.itinerary = itinerary;
+    }
+    // Add accommodations to the new tour if provided
+    if (accommodations && accommodations.length > 0) {
+      newTour.accommodations = accommodations;
+    }
+
+    // Add notes to the new tour if provided
+    if (notes && notes.length > 0) {
+      newTour.notes = notes;
+    }
+
+    // Add inclusions to the new tour if provided
+    if (inclusions && inclusions.length > 0) {
+      newTour.inclusions = inclusions;
+    }
+
+    const savedTour = await newTour.save();
     res.status(200).json({
       success: true,
       message: "Successfully created",
       data: savedTour,
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to create. Try again" });
+    res.status(500).json({ success: false, message: err });
   }
 };
 
-//Update Tour
 export const updateTour = async (req, res) => {
   const id = req.params.id;
+  const { glances, itinerary, accommodations, notes, inclusions, ...updatedData } = req.body; // Destructure glances, itinerary, accommodations, notes, and inclusions from req.body
 
   try {
-    const updatedTour = await Tour.findByIdAndUpdate(
-      id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
+    let tour = await Tour.findById(id);
 
+    if (!tour) {
+      return res.status(404).json({ success: false, message: "Tour not found" });
+    }
+
+    // Update tour fields
+    for (let key in updatedData) {
+      tour[key] = updatedData[key];
+    }
+
+    // Update glances if provided
+    if (glances && glances.length > 0) {
+      tour.glances = glances;
+    }
+
+    // Update itinerary if provided
+    if (itinerary && itinerary.length > 0) {
+      tour.itinerary = itinerary;
+    }
+
+    // Update accommodations if provided
+    if (accommodations && accommodations.length > 0) {
+      tour.accommodations = accommodations;
+    }
+
+    // Update notes if provided
+    if (notes && notes.length > 0) {
+      tour.notes = notes;
+    }
+
+    // Update inclusions if provided
+    if (inclusions && inclusions.length > 0) {
+      tour.inclusions = inclusions;
+    }
+
+    const updatedTour = await tour.save();
     res.status(200).json({
       success: true,
       message: "Successfully updated",
       data: updatedTour,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to update",
-    });
+    res.status(500).json({ success: false, message: "Failed to update" });
   }
 };
 
@@ -63,12 +111,16 @@ export const daleteTour = async (req, res) => {
   }
 };
 
-//Get Single Tour
+// Get Single Tour
 export const getSingleTour = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const tour = await Tour.findById(id).populate("reviews");
+    const tour = await Tour.findById(id);
+
+    if (!tour) {
+      return res.status(404).json({ success: false, message: "Tour not found" });
+    }
 
     res.status(200).json({
       success: true,
@@ -76,10 +128,7 @@ export const getSingleTour = async (req, res) => {
       data: tour,
     });
   } catch (error) {
-    res.status(404).json({
-      success: false,
-      message: "Not Found",
-    });
+    res.status(404).json({ success: false, message: "Not Found" });
   }
 };
 
