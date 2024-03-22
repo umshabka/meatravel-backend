@@ -58,7 +58,7 @@
 // export { createContactInfo, updateContactInfo, getContactInfo };
 
 
-import ContactInfo from '../models/contactInfo.js';
+import ContactInfo from '../models/ContactInfo.js';
 
 const createContactInfo = async (req, res) => {
   const { phone, email } = req.body;
