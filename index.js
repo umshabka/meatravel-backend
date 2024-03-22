@@ -10,6 +10,7 @@ import authRouter from "./routes/auth.js";
 import reviewRouter from "./routes/reviews.js";
 import bookingRouter from "./routes/booking.js";
 import contactInfoRouter from "./routes/contactInfo.js"
+import countriesRouter from "./routes/countries.js"
 
 dotenv.config();
 const app = express();
@@ -47,9 +48,9 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/review", reviewRouter);
 app.use("/api/v1/booking", bookingRouter);
 app.use("/api/v1/contactInfo", contactInfoRouter);
+app.use("/api/v1/countries", countriesRouter);
 
 app.listen(port, () => {
   connect();
   console.log("server listining on port", port);
 });
-

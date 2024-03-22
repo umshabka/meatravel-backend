@@ -3,15 +3,20 @@ import mongoose from "mongoose";
 const contactInfoSchema = new mongoose.Schema(
     {
         phone: {
-            type: Number,
-            required: true,
+            type: String,
+            required: false,
             unique: true,
         },
         email: {
             type: String,
-            required: true,
-            unique: true,
+            required: false,
+            unique: false,
         },
+        showInHomePage:{
+            type: Boolean,
+            required: true,
+            default: false,
+        }
     },
     { timestamps: true }
 );

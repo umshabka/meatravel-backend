@@ -88,7 +88,7 @@ export const updateTour = async (req, res) => {
       data: updatedTour,
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Failed to update" });
+    res.status(500).json({ success: false, message: error });
   }
 };
 
@@ -217,6 +217,28 @@ export const getTourCount = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to fetch",
+    });
+  }
+};
+
+// Get speciefic tours by country name
+export const getToursByCountry = async (req, res) => {
+  const country = req.params.country;
+
+  try {
+    const tours = await Tour.find({ country: country })
+      .populate("reviews");
+
+    res.status(200).json({
+      success: true,
+      message: "Success",
+      count: tours.length,
+      data: tours,
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: "Not Found",
     });
   }
 };
