@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "homepage": "loader.cjs",
-  "main": "loader.cjs",
+  "homepage": "index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node loader.cjs",
-    "start-dev": "nodemon loader.cjs",
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
     "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
