@@ -11,6 +11,8 @@ import reviewRouter from "./routes/reviews.js";
 import bookingRouter from "./routes/booking.js";
 import contactInfoRouter from "./routes/contactInfo.js"
 import countriesRouter from "./routes/countries.js"
+import homeRouter from "./routes/home.js"
+import newsLetterRouter from "./routes/newsLetter.js"
 
 dotenv.config();
 const app = express();
@@ -49,6 +51,8 @@ app.use("/api/v1/review", reviewRouter);
 app.use("/api/v1/booking", bookingRouter);
 app.use("/api/v1/contactInfo", contactInfoRouter);
 app.use("/api/v1/countries", countriesRouter);
+app.use("/api/v1/home", homeRouter);
+app.use("/api/v1/newsLetter", newsLetterRouter);
 
 app.listen(port, () => {
   connect();
