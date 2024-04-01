@@ -3,8 +3,8 @@ import CountriesModel from "../models/Countries.js";
 // Controller for creating a new country
 export const createCountry = async (req, res) => {
   try {
-    const { country, overview_pragraph1, overview_pragraph2 } = req.body;
-    const newCountry = await CountriesModel.create({ country, overview_pragraph1, overview_pragraph2 });
+    const { country, imgTitle, imgDesc, image, overview_paragraph1, overview_paragraph2 } = req.body;
+    const newCountry = await CountriesModel.create({ country, imgTitle, imgDesc, image, overview_paragraph1, overview_paragraph2 });
     res.status(201).json(newCountry);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -64,7 +64,7 @@ export const getCountryById = async (req, res) => {
     const { id } = req.params;
     const country = await CountriesModel.findById(id);
     if (!country) {
-      res.status(404).json({ message: error.message });
+      res.status(404).json({ message: 'Country not found' });
     } else {
       res.json(country);
     }

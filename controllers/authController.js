@@ -13,6 +13,7 @@ export const register = async (req, res) => {
       email: req.body.email,
       password: hash,
       photo: req.body.photo,
+      role: req.body.role
     });
 
     await newUser.save();
@@ -21,7 +22,7 @@ export const register = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ success: false, message: "Failed to create. Try again" });
+      .json({ success: false, message: error });
   }
 };
 

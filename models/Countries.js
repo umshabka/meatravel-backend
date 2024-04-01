@@ -1,8 +1,21 @@
 import mongoose from "mongoose";
 
+// country name - image - title - desc - overview
 const countriesSchema = new mongoose.Schema(
   {
     country: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    imgTitle: {
+      type: String,
+      required: true,
+    },
+    imgDesc: {
       type: String,
       required: true,
     },
