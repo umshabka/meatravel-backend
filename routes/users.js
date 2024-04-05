@@ -5,6 +5,8 @@ import {
   daleteUser,
   getSingleUser,
   getAllUser,
+  sendVerificationCodeByEmail,
+  changePassword
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -29,5 +31,9 @@ router.get("/:id", getSingleUser);
 //get all user
 // router.get("/", verifyAdmin, getAllUser);
 router.get("/", getAllUser);
+
+
+router.post("/sendVerificationCodeByEmail", sendVerificationCodeByEmail);
+router.post("/changePassword", changePassword);
 
 export default router;

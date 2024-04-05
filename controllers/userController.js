@@ -1,4 +1,7 @@
 import User from "../models/User.js";
+import { sendVerificationEmail, generateVerificationCode } from "./VerificationCodeFunctions.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const createUser = async (req, res) => {
   const newUser = new User(req.body);
@@ -85,8 +88,8 @@ export const getSingleUser = async (req, res) => {
 
 //Get All Users
 export const getAllUser = async (req, res) => {
-//   // for pagination
-//   const page = parseInt(req.query.page);
+  //   // for pagination
+  //   const page = parseInt(req.query.page);
 
   try {
     const users = await User.find({});
@@ -102,6 +105,73 @@ export const getAllUser = async (req, res) => {
     res.status(404).json({
       success: false,
       message: "Not Found",
+    });
+  }
+};
+
+// Controller to send verification code to a user's email
+export const sendVerificationCodeByEmail = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Incorrect email address",
+      });
+    }
+
+    const verificationCode = generateVerificationCode();
+    user.email_verification_code = verificationCode;
+    await user.save();
+    await sendVerificationEmail(email, verificationCode);
+
+    res.status(200).json({
+      success: true,
+      message: "Verification code sent successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to send verification code",
+    });
+  }
+};
+
+// Controller to change user password
+export const changePassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Email not found",
+      });
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(newPassword, salt);
+    
+    // Update the user's password
+    user.password = hash;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password changed successfully",
+      data: user,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
     });
   }
 };

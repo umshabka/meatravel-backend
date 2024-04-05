@@ -1,21 +1,27 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { sendVerificationEmail, generateVerificationCode } from "./VerificationCodeFunctions.js";
 
 //user registration
 export const register = async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
+    const verificationCode = generateVerificationCode();
 
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
       password: hash,
       photo: req.body.photo,
-      role: req.body.role
+      role: req.body.role,
+      is_email_verified: false,
+      email_verification_code: verificationCode,
+      accountType: req.body.accountType,
     });
 
+    await sendVerificationEmail(req.body.email, verificationCode);
     await newUser.save();
 
     res.status(200).json({ success: true, message: "Successfully created" });
@@ -25,6 +31,44 @@ export const register = async (req, res) => {
       .json({ success: false, message: error });
   }
 };
+
+// Controller to verify user account using verification code
+export const verifyAccount = async (req, res) => {
+  const { email, verificationCode } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Incorrect email address",
+      });
+    }
+
+    if (user.email_verification_code !== verificationCode) {
+      return res.status(400).json({
+        success: false,
+        message: "Incorrect verification code",
+      });
+    }
+
+    user.is_email_verified = true;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Account verified successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to verify account",
+    });
+  }
+};
+
 
 //user login
 export const login = async (req, res) => {

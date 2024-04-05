@@ -25,6 +25,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    accountType: {
+      type: String,
+      default: 'Individual',
+    },
+    is_email_verified: {
+      type: Boolean,
+      default: false,
+    },
+    email_verification_code: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
