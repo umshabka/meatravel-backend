@@ -10,8 +10,8 @@ export function generateVerificationCode() {
 export const sendVerificationEmail = async (email, verificationCode) => {
     try {
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            host: 'smtp.gmail.com',
+            host: 'mail.mea-travel.com',
+            port: 465,
             auth: {
                 user: process.env.VERIFICATION_EMAIL,
                 pass: process.env.VERIFICATION_PASSWORD
