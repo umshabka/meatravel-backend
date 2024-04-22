@@ -13,6 +13,9 @@ import contactInfoRouter from "./routes/contactInfo.js"
 import countriesRouter from "./routes/countries.js"
 import homeRouter from "./routes/home.js"
 import newsLetterRouter from "./routes/newsLetter.js"
+import newsLetterEmailsRouter from "./routes/newsLetterEmails.js"
+import galleryRouter from "./routes/gallery.js"
+import cutomiseTripRoutes from './routes/cutomiseTrip.js';
 
 dotenv.config();
 const app = express();
@@ -53,6 +56,9 @@ app.use("/api/v1/contactInfo", contactInfoRouter);
 app.use("/api/v1/countries", countriesRouter);
 app.use("/api/v1/home", homeRouter);
 app.use("/api/v1/newsLetter", newsLetterRouter);
+app.use("/api/v1/newsLetterEmails", newsLetterEmailsRouter);
+app.use("/api/v1/gallery", galleryRouter);
+app.use('/api/v1/cutomiseTrips', cutomiseTripRoutes);
 
 app.listen(port, () => {
   connect();

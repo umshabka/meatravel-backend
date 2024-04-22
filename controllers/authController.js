@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { sendVerificationEmail, generateVerificationCode } from "./VerificationCodeFunctions.js";
+import { sendVerificationEmail, generateVerificationCode } from "./Functions/VerificationCodeFunctions.js";
 
 //user registration
 export const register = async (req, res) => {

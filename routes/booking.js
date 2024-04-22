@@ -4,17 +4,20 @@ import {
   createBooking,
   getAllBooking,
   getBooking,
-  daleteBooking
+  daleteBooking,
+  downloadBookingsExcel
 } from "../controllers/bookingController.js";
 
 const router = express.Router();
 
-router.post("/", verifyUser, createBooking);
-router.get("/:id", verifyUser, getBooking);
+router.post("/",  createBooking);
+router.get('/downloadExcelSheet', downloadBookingsExcel);
+// router.get("/:id", verifyUser, getBooking);
+router.get("/:id", getBooking);
 // router.get("/", verifyAdmin, getAllBooking);
-
 router.get("/", getAllBooking);
-
 router.delete("/:id", daleteBooking);
+
+
 
 export default router;

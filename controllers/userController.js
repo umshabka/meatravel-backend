@@ -1,7 +1,6 @@
 import User from "../models/User.js";
-import { sendVerificationEmail, generateVerificationCode } from "./VerificationCodeFunctions.js";
+import { sendVerificationEmail, generateVerificationCode } from "./Functions/VerificationCodeFunctions.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 export const createUser = async (req, res) => {
   const newUser = new User(req.body);

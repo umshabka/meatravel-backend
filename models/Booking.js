@@ -1,5 +1,24 @@
 import mongoose from "mongoose";
 
+const RoomSchema = new mongoose.Schema({
+  _id: {
+    type: Number, 
+    required: true,
+  },
+  bedTypes: {
+    type: String,
+    required: true,
+  },
+  children: {
+    type: Number, 
+    required: true,
+  },
+  adults: {
+    type: Number, 
+    required: true,
+  }
+});
+
 const bookingSchema = new mongoose.Schema(
   {
     userId: {
@@ -30,6 +49,10 @@ const bookingSchema = new mongoose.Schema(
     },
     bookAt: {
       type: Date,
+      required: true,
+    },
+    rooms: {
+      type: [RoomSchema],
       required: true,
     },
   },
