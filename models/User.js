@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
 
     photo: {
       type: String,
+      default: "http://res.cloudinary.com/dgswngo1l/image/upload/v1714252409/upload/hdjhnqstnxotb1p5tuwt.jpg"
     },
 
     role: {
@@ -28,6 +29,10 @@ const userSchema = new mongoose.Schema(
     accountType: {
       type: String,
       default: 'Individual',
+    },
+    travelAgent_Verification: {
+      type: Boolean,
+      default: false,
     },
     is_email_verified: {
       type: Boolean,

@@ -14,7 +14,7 @@ export const register = async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: hash,
-      photo: req.body.photo,
+      photo: req.body.photo || "http://res.cloudinary.com/dgswngo1l/image/upload/v1714252409/upload/hdjhnqstnxotb1p5tuwt.jpg",
       role: req.body.role,
       is_email_verified: false,
       email_verification_code: verificationCode,
