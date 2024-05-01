@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-const sendBookingConfirmationEmail = async (booking) => {
+const sendBookingConfirmationEmail = async (booking, accountType) => {
 
     try {
         const transporter = nodemailer.createTransport({
@@ -14,7 +14,7 @@ const sendBookingConfirmationEmail = async (booking) => {
 
         const roomsHtml = booking.rooms.map(room => `
             <li>
-                <strong>Room ID:</strong> ${room._id}<br>
+                <strong>Room Number:</strong> ${room._id+1}<br>
                 <strong>Bed Types:</strong> ${room.bedTypes}<br>
                 <strong>Children:</strong> ${room.children}<br>
                 <strong>Adults:</strong> ${room.adults}<br>
@@ -22,9 +22,16 @@ const sendBookingConfirmationEmail = async (booking) => {
         `).join('');
 
 
+        let recipientEmail = 'booking@mea-travel.com';
+        if (accountType === 'TravelAgent') {
+            recipientEmail = 'sales@mea-travel.com';
+        } else recipientEmail = 'booking@mea-travel.com';
+
+        const bookAtDateOnly = booking.bookAt ? booking.bookAt.toISOString().split('T')[0] : '';
+
         const mailOptions = {
             from: process.env.VERIFICATION_EMAIL,
-            to: 'booking@mea-travel.com',
+            to: recipientEmail,
             subject: 'New Booking, Mea-Travel',
             // text: `A new booking has been made:\n\n${JSON.stringify(booking, null, 2)}`
             html: `
@@ -37,7 +44,7 @@ const sendBookingConfirmationEmail = async (booking) => {
           <li><strong>Full Name:</strong> ${booking.fullName}</li>
           <li><strong>Phone:</strong> ${booking.phone}</li>
           <li><strong>Nationality:</strong> ${booking.nationality}</li>
-          <li><strong>Booked At:</strong> ${new Date(booking.bookAt).toLocaleString()}</li>
+          <li><strong>Start Day Of The Trip:</strong> ${bookAtDateOnly}</li>
           <li><strong>Guest Size:</strong> ${booking.guestSize}</li>
           <li><strong>Rooms:</strong></li>
             <ul>${roomsHtml}</ul>

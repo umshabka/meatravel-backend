@@ -1,19 +1,27 @@
 import Tour from "../models/Tour.js";
 
-export const  createTour = async (req, res) => {
+export const createTour = async (req, res) => {
   try {
-    const tour = await Tour.create(req.body);
+    const { price, ...otherTourData } = req.body;
+    const priceForTravelAgents = price * 0.8;
+    const tourDataWithDiscount = { ...otherTourData,price, priceForTravelAgents };
+    const tour = await Tour.create(tourDataWithDiscount);
     res.status(201).json({ success: true, data: tour });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
   }
 };
 
+
 // Update an existing tour
-export const  updateTour = async (req, res) => {
+export const updateTour = async (req, res) => {
   try {
     const { id } = req.params;
-    const tour = await Tour.findByIdAndUpdate(id, req.body, {
+    const { price, ...otherTourData } = req.body;
+    const priceForTravelAgents = price * 0.8;
+    const tourDataWithDiscount = { ...otherTourData,price, priceForTravelAgents };
+
+    const tour = await Tour.findByIdAndUpdate(id, tourDataWithDiscount, {
       new: true,
       runValidators: true,
     });
@@ -27,6 +35,7 @@ export const  updateTour = async (req, res) => {
     res.status(400).json({ success: false, error: error.message });
   }
 };
+
 
 //Delete Tour
 export const daleteTour = async (req, res) => {

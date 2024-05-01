@@ -260,6 +260,11 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    priceForTravelAgents:{
+      type: Number,
+      required: false,
+      default: 0
+    },
     maxGroupSize: {
       type: Number,
       required: true,

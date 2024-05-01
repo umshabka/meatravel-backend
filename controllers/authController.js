@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sendVerificationEmail, generateVerificationCode } from "./Functions/VerificationCodeFunctions.js";
+import TravelAgentEmailFunction from "./Functions/TravelAgentEmailFunction.js";
 
 //user registration
 export const register = async (req, res) => {
@@ -21,7 +22,9 @@ export const register = async (req, res) => {
       accountType: req.body.accountType,
     });
 
-    await sendVerificationEmail(req.body.email, verificationCode);
+    if (newUser.accountType != 'TravelAgent') await sendVerificationEmail(req.body.email, verificationCode);
+    if (newUser.accountType === 'TravelAgent') await TravelAgentEmailFunction();
+
     await newUser.save();
 
     res.status(200).json({ success: true, message: "Successfully created" });

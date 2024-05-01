@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import TravelAgentEmailVerificationFunction from "./Functions/TravelAgentEmailVerificationFunction.js";
 import { sendVerificationEmail, generateVerificationCode } from "./Functions/VerificationCodeFunctions.js";
 import bcrypt from "bcryptjs";
 
@@ -25,6 +26,24 @@ export const updateUser = async (req, res) => {
   const id = req.params.id;
 
   try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (
+      user.accountType === 'TravelAgent' &&
+      user.travelAgent_Verification == false &&
+      req.body.travelAgent_Verification == 'true'
+    ) TravelAgentEmailVerificationFunction(user.email)
+    console.log('User:', user.travelAgent_Verification);
+    console.log('req.body.travelAgent_Verification:', req.body.travelAgent_Verification);
+
+
     const updatedUser = await User.findByIdAndUpdate(
       id,
       {
@@ -156,7 +175,7 @@ export const changePassword = async (req, res) => {
 
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(newPassword, salt);
-    
+
     // Update the user's password
     user.password = hash;
     await user.save();

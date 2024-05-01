@@ -9,7 +9,14 @@ export const createBooking = async (req, res) => {
   const newBooking = new Booking(req.body);
   try {
     const savedBooking = await newBooking.save();
-    await sendBookingConfirmationEmail(savedBooking) // To send email to the admin
+    const user = await User.findById(savedBooking.userId);
+
+    // To send email to the admin
+    if (user.accountType === 'TravelAgent')
+      await sendBookingConfirmationEmail(savedBooking, 'TravelAgent')
+    else
+      await sendBookingConfirmationEmail(savedBooking, 'user')
+
     res
       .status(200)
       .json({
@@ -109,7 +116,7 @@ export const downloadBookingsExcel = async (req, res) => {
       { header: 'Full Name', key: 'fullName', width: 20 },
       { header: 'Phone', key: 'phone', width: 20 },
       { header: 'Nationality', key: 'nationality', width: 20 },
-      { header: 'Booked At', key: 'bookAt', width: 20 },
+      { header: 'Start Day Of The Trip', key: 'bookAt', width: 30 },
       { header: 'Guest Size', key: 'guestSize', width: 20 },
       { header: 'Rooms', key: 'rooms', width: 60 },
     ];
@@ -117,8 +124,9 @@ export const downloadBookingsExcel = async (req, res) => {
     for (const booking of bookings) {
       const user = await User.findById(booking.userId);
       if (!user) continue;
-      
-      const roomsInfo = booking.rooms.map(room => `Room ID: ${room._id}, Bed Types: ${room.bedTypes}, Children: ${room.children}, Adults: ${room.adults}`).join('\n');
+
+      const bookAtDateOnly = booking.bookAt ? booking.bookAt.toISOString().split('T')[0] : '';
+      const roomsInfo = booking.rooms.map(room => `Room Number: ${room._id+1}, Bed Types: ${room.bedTypes}, Children: ${room.children}, Adults: ${room.adults}`).join('\n');
       worksheet.addRow({
         userEmail: booking.userEmail,
         userId: booking.userId,
@@ -128,7 +136,7 @@ export const downloadBookingsExcel = async (req, res) => {
         guestSize: booking.guestSize,
         phone: booking.phone,
         nationality: booking.nationality,
-        bookAt: booking.bookAt.toISOString(),
+        bookAt: bookAtDateOnly,
         rooms: roomsInfo,
       });
     }
